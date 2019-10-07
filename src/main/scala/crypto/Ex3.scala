@@ -27,5 +27,13 @@ object Ex3 {
   }
 
   def solveSingleCharacterXor(bytes: Array[Byte]) =
-    (0 to 255).map((b: Int) => (b.toByte, Utils.xorSingle(bytes, b.toByte))).maxBy((x: (Byte, Array[Byte])) => Utils.score(x._2))
+    (0 to 255)
+      .map((b: Int) => (b.toByte, Utils.xorSingle(bytes, b.toByte)))
+      .maxBy((x: (Byte, Array[Byte])) => Utils.score(x._2))
+
+  def solveKey(bytes: Array[Byte]) =
+    this.solveSingleCharacterXor(bytes)._1.toChar
+
+  def solveMessage(bytes: Array[Byte]) =
+    this.solveSingleCharacterXor(bytes)._2.map(_.toChar).mkString
 }

@@ -11,7 +11,7 @@ import crypto.utils._
 
 object Ex8 {
   def main(args: Array[String]) = {
-    val source = scala.io.Source.fromFile("ex8.txt")
+    val source = scala.io.Source.fromFile("data/ex8.txt")
     val lines = source.getLines().toArray
     val encryptedLine = lines.reverse.maxBy(line => findMostRepeatingBlockFrequency(line))
     println(encryptedLine)

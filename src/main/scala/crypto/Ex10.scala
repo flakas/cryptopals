@@ -26,7 +26,7 @@ import crypto.ex9._
 
 object Ex10 {
   def main(args: Array[String]) = {
-    val source = scala.io.Source.fromFile("ex10.txt")
+    val source = scala.io.Source.fromFile("data/ex10.txt")
     val lines = source.getLines().toArray
     val bytes = Utils.b64Decode(lines.head)
     val initializationVector = Array.fill(32)(0.toByte)

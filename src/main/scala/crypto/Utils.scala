@@ -1,5 +1,6 @@
 package crypto.utils
 
+import java.util.Base64
 import javax.crypto.spec.SecretKeySpec
 import javax.crypto.Cipher
 
@@ -8,9 +9,9 @@ object Utils {
 
   def binToHex(b: Array[Byte]) = b.map("%02x".format(_)).mkString
 
-  def b64Encode(b: Array[Byte]) = new sun.misc.BASE64Encoder().encode(b)
+  def b64Encode(b: Array[Byte]) = Base64.getEncoder().encodeToString(b)
 
-  def b64Decode(s: String) = new sun.misc.BASE64Decoder().decodeBuffer(s)
+  def b64Decode(s: String) : Array[Byte] = Base64.getDecoder().decode(s)
 
   def score(bytes: Array[Byte]) = {
     val vowels = " aeiou".getBytes()
