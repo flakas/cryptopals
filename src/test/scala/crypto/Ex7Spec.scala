@@ -31,6 +31,7 @@
 // block. Put them together and you have the key.
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex7.Ex7
 import crypto.utils.Utils
 
@@ -43,6 +44,6 @@ class Ex7Spec extends FunSuite with DiagrammedAssertions {
     val bytes = Utils.b64Decode(line)
     val key = "YELLOW SUBMARINE".getBytes()
     val target = "I'm back and I'm ringin' the bell"
-    assert(Ex7.decryptAES(bytes, key).map(_.toChar).mkString.startsWith(target))
+    Ex7.decryptAES(bytes, key).map(_.toChar).mkString should startWith(target)
   }
 }

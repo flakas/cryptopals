@@ -14,6 +14,7 @@
 // Tune your algorithm until this works.
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex3.Ex3
 import crypto.utils.Utils
 
@@ -22,10 +23,10 @@ class Ex3Spec extends FunSuite with DiagrammedAssertions {
 
   test("finds the correct key") {
     val correctKey = "X"
-    assert(Ex3.solveKey(Utils.hexToBin(initial)) == 'X')
+    Ex3.solveKey(Utils.hexToBin(initial)) should equal('X')
   }
 
   test("decodes the message") {
-    assert(Ex3.solveMessage(Utils.hexToBin(initial)) == "Cooking MC's like a pound of bacon")
+    Ex3.solveMessage(Utils.hexToBin(initial)) should equal("Cooking MC's like a pound of bacon")
   }
 }

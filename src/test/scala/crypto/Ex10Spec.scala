@@ -20,17 +20,30 @@
 //SUBMARINE" with an IV of all ASCII 0 (\x00\x00\x00 &c)
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex10.Ex10
+import crypto.algorithms.aes.AES
+import crypto.utils._
 
 class Ex10Spec extends FunSuite with DiagrammedAssertions {
   val fileName = "data/ex10.txt"
 
   test("Can encrypt AES128CBC") {
-    val originalText = "Don't mind me, I am just testing".getBytes()
+    val originalBytes = "Don't mind me, I am just testing".getBytes()
     val key = "YELLOW SUBMARINE".getBytes()
     val iv = Array.fill(32)(0.toByte)
-    val encrypted = Ex10.encryptAES128CBC(originalText, key, iv)
-    val decrypted = Ex10.decryptAES128CBC(encrypted, key, iv)
-    assert(originalText.deep == decrypted.deep)
+    val encryptedBytes = AES.encryptAES128CBC(originalBytes, key, iv)
+    val decryptedBytes = AES.decryptAES128CBC(encryptedBytes, key, iv)
+    originalBytes should be(decryptedBytes)
+  }
+
+  test("Can decrypt AES128CBC") {
+    val targetBytes = "I'm back and I'm ringin' the bell".getBytes()
+    val source = scala.io.Source.fromFile(fileName)
+    val lines = source.getLines().toArray
+    val bytes = Utils.b64Decode(lines.head)
+    val initializationVector = Array.fill(32)(0.toByte)
+    val decryptedBytes = AES.decryptAES128CBC(bytes, "YELLOW SUBMARINE".getBytes(), initializationVector)
+    decryptedBytes.slice(0, targetBytes.length) should equal(targetBytes)
   }
 }

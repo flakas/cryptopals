@@ -7,6 +7,7 @@
 //The particulars of this algorithm are easy to find online.
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex9.Ex9
 import crypto.utils.Utils
 
@@ -17,6 +18,6 @@ class Ex9Spec extends FunSuite with DiagrammedAssertions {
     val source = "YELLOW SUBMARINE"
     var length = 20
     val target = "59454c4c4f57205355424d4152494e4504040404"
-    assert(Utils.binToHex(Ex9.pkcs7PadBlocks(source.getBytes(), length)) == target)
+    Utils.binToHex(Utils.pkcs7PadBlock(source.getBytes(), length)) should equal(target)
   }
 }

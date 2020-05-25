@@ -31,6 +31,7 @@
 // block. Put them together and you have the key.
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex6.Ex6
 import crypto.utils.Utils
 
@@ -40,14 +41,14 @@ class Ex6Spec extends FunSuite with DiagrammedAssertions {
   test("Finds the right key") {
     val correctKey = "Terminator X: Bring the noise"
     val key = Ex6.findKey(loadData())
-    assert(key == correctKey)
+    key should equal(correctKey)
   }
 
   test("Correctly decrypts the message") {
     val partialMessage = "I'm back and I'm ringin' the bell"
     val correctKey = "Terminator X: Bring the noise"
     val data = loadData()
-    assert(Ex6.decryptMessage(data, correctKey).startsWith(partialMessage))
+    Ex6.decryptMessage(data, correctKey) should startWith(partialMessage)
   }
 
   def loadData() : Array[Byte] = {

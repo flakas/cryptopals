@@ -1,8 +1,7 @@
 package crypto.utils
 
 import java.util.Base64
-import javax.crypto.spec.SecretKeySpec
-import javax.crypto.Cipher
+import scala.util.Random
 
 object Utils {
   def hexToBin(s: String) = s.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte)
@@ -13,7 +12,7 @@ object Utils {
 
   def b64Decode(s: String) : Array[Byte] = Base64.getDecoder().decode(s)
 
-  def score(bytes: Array[Byte]) = {
+  def scoreByVowelFrequency(bytes: Array[Byte]) = {
     val vowels = " aeiou".getBytes()
     bytes.count((b: Byte) => vowels.contains(b)).toFloat / bytes.length
   }
@@ -35,18 +34,17 @@ object Utils {
     b1.zip(b2).count(x => x._1 != x._2)
   }
 
-  def encodeAES128ECB(bytes: Array[Byte], key: Array[Byte]) = {
-    val secretKey = new SecretKeySpec(key, "AES")
-    //val encipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
-    val encipher = Cipher.getInstance("AES/ECB/NoPadding")
-    encipher.init(Cipher.ENCRYPT_MODE, secretKey)
-    encipher.doFinal(bytes)
+  def pkcs7PadBlock(bytes: Array[Byte], length: Int): Array[Byte] =
+    bytes.padTo(length, (length - bytes.length).toByte)
+
+  def randomBytes(length: Int) : Array[Byte] = {
+    val array = new Array[Byte](length)
+    Random.nextBytes(array)
+    array
   }
 
-  def decodeAES128ECB(bytes: Array[Byte], key: Array[Byte]) = {
-    val secretKey = new SecretKeySpec(key, "AES")
-    val encipher = Cipher.getInstance("AES/ECB/NoPadding")
-    encipher.init(Cipher.DECRYPT_MODE, secretKey)
-    encipher.doFinal(bytes)
+  def findMostRepeatingBlockFrequency(bytes: Array[Byte], blockSize: Int): Float = {
+    val blocks = bytes.grouped(blockSize).toArray
+    blocks.map(block => blocks.count(b => b.sameElements(block))).max
   }
 }

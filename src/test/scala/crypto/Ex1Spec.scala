@@ -9,6 +9,7 @@
 //hex and base64 for pretty-printing.
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex1.Ex1
 import crypto.utils.Utils
 
@@ -19,12 +20,12 @@ class Ex1Spec extends FunSuite with DiagrammedAssertions {
   test("Encodes hex to base64") {
     val target = sample_b64
     val b64 = Ex1.encodeHexToBase64(sample_hex)
-    assert(b64 == sample_b64)
+    b64 should equal(sample_b64)
   }
 
   test("Decodes base64 to binary") {
     val got_bytes = Ex1.decodeBase64ToHex(sample_b64)
     val got_hex = Utils.binToHex(got_bytes)
-    assert(got_hex == sample_hex)
+    got_hex should equal(sample_hex)
   }
 }

@@ -5,6 +5,7 @@
 //has been encrypted by single-character XOR. Find it. (Your code from #3 should help.)
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import scala.io.Source
 import crypto.ex4.Ex4
 import crypto.utils.Utils
@@ -17,6 +18,6 @@ class Ex4Spec extends FunSuite with DiagrammedAssertions {
     val source = Source.fromFile(fileName)
     val lines = source.getLines().toSeq.map(Utils.hexToBin(_))
     val result = Ex4.findEncrypted(lines)
-    assert(Utils.binToHex(result._3) == expectedEncryptedString)
+    Utils.binToHex(result._3) should equal(expectedEncryptedString)
   }
 }

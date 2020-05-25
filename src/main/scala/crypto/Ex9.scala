@@ -13,11 +13,8 @@ import crypto.utils._
 object Ex9 {
   def main(args: Array[String]) = {
     val bytes = "YELLOW SUBMARINE".getBytes()
-    val paddedBytes = pkcs7PadBlocks(bytes, 20)
+    val paddedBytes = Utils.pkcs7PadBlock(bytes, 20)
     println(Utils.binToHex(paddedBytes))
   }
 
-  def pkcs7PadBlocks(bytes: Array[Byte], length: Int): Array[Byte] = {
-    bytes.padTo(length, (length - bytes.length).toByte)
-  }
 }

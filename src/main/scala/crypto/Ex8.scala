@@ -19,7 +19,6 @@ object Ex8 {
   }
 
   def findMostRepeatingBlockFrequency(line: String): Float = {
-    val blocks = line.grouped(16).toArray
-    blocks.map(block => blocks.count(b => b.equals(block))).max.toFloat
+    Utils.findMostRepeatingBlockFrequency(line.getBytes(), 16)
   }
 }

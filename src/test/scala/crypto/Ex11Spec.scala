@@ -23,10 +23,22 @@
 // Now detect the block cipher mode the function is using each time.
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex11.Ex11
+import crypto.algorithms.aes.AES
 
 class Ex11Spec extends FunSuite with DiagrammedAssertions {
+  val plaintext = ("A"*128).getBytes() // "Hey, you there! Do you think this thing is working yet? Does it?".getBytes()
 
-  test("Dud test") {
+  test("It detects repeating blocks") {
+    assert(AES.isECB(plaintext) == true)
+  }
+
+  test("Detects when cipher is using ECB mode") {
+    assert(Ex11.predictMode(Ex11.encryptECB(plaintext)) == "ECB")
+  }
+
+  test("Detects when cipher is using CBC mode") {
+    Ex11.predictMode(Ex11.encryptCBC(plaintext)) should equal("CBC")
   }
 }

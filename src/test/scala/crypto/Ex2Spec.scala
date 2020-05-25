@@ -16,6 +16,7 @@
 // 746865206b696420646f6e277420706c6179
 
 import org.scalatest._
+import org.scalatest.Matchers._
 import crypto.ex2.Ex2
 import crypto.utils.Utils
 
@@ -29,6 +30,6 @@ class Ex2Spec extends FunSuite with DiagrammedAssertions {
       Utils.hexToBin(hexA),
       Utils.hexToBin(hexB),
     ))
-    assert(gotSum == xorSummedHex)
+    gotSum should equal(xorSummedHex)
   }
 }

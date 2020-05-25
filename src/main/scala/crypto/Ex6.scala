@@ -49,7 +49,7 @@ object Ex6 {
 
   def findKey(bytes: Array[Byte]) = {
     val lengths = (2 to 40).map(n => (n, calculateDistance(bytes, n, 3))).sortBy(x => x._2)
-    val key = lengths.take(3).map(_._1).map(length => solveKeyByLength(bytes, length)).maxBy(key => Utils.score(Utils.xorRepeating(bytes, key)))
+    val key = lengths.take(3).map(_._1).map(length => solveKeyByLength(bytes, length)).maxBy(key => Utils.scoreByVowelFrequency(Utils.xorRepeating(bytes, key)))
     key.map(_.toChar).mkString
   }
 

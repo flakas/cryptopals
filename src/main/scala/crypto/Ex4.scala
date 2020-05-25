@@ -23,10 +23,10 @@ object Ex4 {
   def findEncrypted(lines: Seq[Array[Byte]]) =
     lines
       .map(findBestScore(_))
-      .maxBy((x: (Byte, Array[Byte], Array[Byte])) => Utils.score(x._2))
+      .maxBy((x: (Byte, Array[Byte], Array[Byte])) => Utils.scoreByVowelFrequency(x._2))
 
   def findBestScore(bytes: Array[Byte]) =
     (0 to 255)
       .map((b: Int) => (b.toByte, Utils.xorSingle(bytes, b.toByte), bytes))
-      .maxBy((x: (Byte, Array[Byte], Array[Byte])) => Utils.score(x._2))
+      .maxBy((x: (Byte, Array[Byte], Array[Byte])) => Utils.scoreByVowelFrequency(x._2))
 }
