@@ -26,7 +26,7 @@ package crypto.ex11
 
 import scala.util.Random
 import crypto.utils._
-import crypto.algorithms.aes.AES
+import crypto.algorithms.AES
 
 object Ex11 {
   def main(args: Array[String]) = {
@@ -37,25 +37,15 @@ object Ex11 {
   }
 
   def encryptionOracle(data: Array[Byte]) : (String, Array[Byte]) = {
-    val paddedData = padPlaintext(data)
+    val paddedData = Oracle.randomPadPlaintext(data, (5 to 11), (5 to 11))
     if (Random.nextBoolean()) {
       ("ECB", encryptECB(paddedData))
     } else {
       ("CBC", encryptCBC(paddedData))
     }
   }
-
-  def padPlaintext(data: Array[Byte]) = {
-    val prefix = new Array[Byte]((new Random).between(5, 11))
-    val suffix = new Array[Byte]((new Random).between(5, 11))
-    Random.nextBytes(prefix)
-    Random.nextBytes(suffix)
-    prefix ++ data ++ suffix
-  }
-
-  def getRandomKey = Utils.randomBytes(16)
-  def encryptECB(data: Array[Byte]) = AES.encryptAES128ECB(data, getRandomKey)
-  def encryptCBC(data: Array[Byte]) = AES.encryptAES128CBC(data, getRandomKey, getRandomKey)
+  def encryptECB(data: Array[Byte]) = Oracle.encryptAES128ECB(data)
+  def encryptCBC(data: Array[Byte]) = Oracle.encryptAES128CBC(data)
 
   def predictMode(data: Array[Byte]) : String = if(AES.isECB(data)) "ECB" else "CBC"
 }

@@ -1,4 +1,4 @@
-package crypto.algorithms.aes
+package crypto.algorithms
 
 import javax.crypto.spec.SecretKeySpec
 import javax.crypto.Cipher

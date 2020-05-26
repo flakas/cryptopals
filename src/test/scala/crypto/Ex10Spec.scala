@@ -22,7 +22,7 @@
 import org.scalatest._
 import org.scalatest.Matchers._
 import crypto.ex10.Ex10
-import crypto.algorithms.aes.AES
+import crypto.algorithms.AES
 import crypto.utils._
 
 class Ex10Spec extends FunSuite with DiagrammedAssertions {

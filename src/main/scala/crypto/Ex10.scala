@@ -23,7 +23,7 @@ package crypto.ex10
 
 import crypto.utils._
 import crypto.ex9._
-import crypto.algorithms.aes.AES
+import crypto.algorithms.AES
 
 object Ex10 {
   def main(args: Array[String]) = {
